@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./AddTodo.css";
-function AddTodo({ addTodos }) {
+import TodoContext from "../../context/TodoContext";
+function AddTodo() {
+  const { todos, setTodos } = useContext(TodoContext);
   const [todotext, setTodotext] = useState("");
 
   return (
@@ -16,7 +18,15 @@ function AddTodo({ addTodos }) {
 
       <button
         onClick={() => {
-          addTodos(todotext);
+          if (!todotext) {
+            alert("Add todo please");
+          } else {
+            let nextId = todos.length + 1;
+            setTodos([
+              ...todos,
+              { id: nextId, isFinished: false, text: todotext },
+            ]);
+          }
           setTodotext("");
         }}
       >
