@@ -2,8 +2,13 @@ import { useContext, useState } from "react";
 import "./AddTodo.css";
 import TodoContext from "../../context/TodoContext";
 function AddTodo() {
-  const { todos, setTodos } = useContext(TodoContext);
+  const { dispatch } = useContext(TodoContext);
   const [todotext, setTodotext] = useState("");
+
+  function addTodo(todotext) {
+    dispatch({ type: "add_todo", payload: { todotext } });
+    setTodotext("");
+  }
 
   return (
     <div className="add_todo_wrapper">
@@ -18,16 +23,7 @@ function AddTodo() {
 
       <button
         onClick={() => {
-          if (!todotext) {
-            alert("Add todo please");
-          } else {
-            let nextId = todos.length + 1;
-            setTodos([
-              ...todos,
-              { id: nextId, isFinished: false, text: todotext },
-            ]);
-          }
-          setTodotext("");
+          addTodo(todotext);
         }}
       >
         Submit
