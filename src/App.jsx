@@ -1,24 +1,21 @@
 import TodoList from "./components/TodoList/TodoList";
 import "./App.css";
 import AddTodo from "./components/AddTodo/AddTodo";
-import { useEffect, useReducer } from "react";
-import TodoContext from "./context/TodoContext";
-import TodoReducer from "./reducers/TodoReducer";
+import { Provider } from "react-redux";
+import store from "./redux/redux";
 
 function App() {
-  const [todos, dispatch] = useReducer(TodoReducer, []);
-
   // useEffect(() => {
   //   console.log(todos);
   // });
 
   return (
-    <TodoContext.Provider value={{ todos, dispatch }}>
+    <Provider store={store}>
       <div className="main_wrapper">
         <AddTodo />
         <TodoList />
       </div>
-    </TodoContext.Provider>
+    </Provider>
   );
 }
 export default App;
